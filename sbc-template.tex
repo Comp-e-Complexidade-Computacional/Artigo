@@ -1,11 +1,18 @@
 \documentclass[12pt]{article}
 
+\usepackage{etoolbox}
 \usepackage{sbc-template}
 \usepackage{graphicx,url}
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
-\usepackage[latin1]{inputenc}  
+\usepackage[none]{hyphenat}
 
+\makeatletter
+\patchcmd{\@startsection}
+{\@afterindentfalse}
+{\@afterindenttrue}
+{}{}
+\makeatother
      
 \sloppy
 
@@ -14,11 +21,7 @@
 \author{Anthony França, Antônio Neto, Enzo Santana, Franck Vasconcelos,\\
 Murilo Mota, Rafael Gonçalves, Rene Marinho}
 
-
-
-\address{Universidade Tiradentes
-  (UNIT)\\
-}
+\address{Universidade Tiradentes (UNIT)\\}
 
 \begin{document} 
 
@@ -32,32 +35,21 @@ O objetivo deste estudo é identificar a localização otimizada para farmácias
 
 \section{Introdução}
 
-All full papers and posters (short papers) submitted to some SBC conference,
-including any supporting documents, should be written in English or in
-Portuguese. The format paper should be A4 with single column, 3.5 cm for upper
-margin, 2.5 cm for bottom margin and 3.0 cm for lateral margins, without
-headers or footers. The main font must be Times, 12 point nominal size, with 6
-points of space before each paragraph. Page numbers must be suppressed.
+A localização de estabelecimentos comerciais desempenha papel fundamental no desempenho e na sustentabilidade de negócios. No setor farmacêutico, esse aspecto torna-se ainda mais relevante, pois envolve não apenas critérios de competitividade, mas também de acesso à saúde e bem-estar da população. A escolha inadequada do ponto de instalação pode resultar em altos custos, baixa atratividade de clientes e dificuldades logísticas no abastecimento de medicamentos.
 
-Full papers must respect the page limits defined by the conference.
-Conferences that publish just abstracts ask for \textbf{one}-page texts.
+No contexto de Aracaju, especificamente no bairro Centro, observa-se uma concentração significativa de atividades comerciais e serviços. Trata-se de uma região com fluxo intenso de pessoas, proximidade de órgãos públicos e presença de distribuidores de medicamentos, o que torna a análise de localização particularmente estratégica. Este estudo propõe identificar os pontos mais adequados para a instalação de novas farmácias, desconsiderando as já existentes, a fim de apontar oportunidades reais de expansão no setor.
 
-\section{Trabalhos Relacionados} \label{sec:firstpage}
+Para tanto, são considerados critérios como relevo, acessibilidade, proximidade de polos comerciais e disponibilidade de terrenos ou imóveis para locação. A análise visa fornecer subsídios práticos tanto para empreendedores que desejam investir no setor farmacêutico quanto para planejadores urbanos interessados em compreender a dinâmica de serviços essenciais em áreas centrais da capital sergipana.
 
-The first page must display the paper title, the name and address of the
-authors, the abstract in English and ``resumo'' in Portuguese (``resumos'' are
-required only for papers written in Portuguese). The title must be centered
-over the whole page, in 16 point boldface font and with 12 points of space
-before itself. Author names must be centered in 12 point font, bold, all of
-them disposed in the same line, separated by commas and with 12 points of
-space after the title. Addresses must be centered in 12 point font, also with
-12 points of space after the authors' names. E-mail addresses should be
-written using font Courier New, 10 point nominal size, with 6 points of space
-before and 6 points of space after.
+\section{Trabalhos Relacionados}
 
-The abstract and ``resumo'' (if is the case) must be in 12 point Times font,
-indented 0.8cm on both sides. The word \textbf{Abstract} and \textbf{Resumo},
-should be written in boldface and must precede the text.
+A literatura sobre problemas de localização de instalações apresenta uma variedade de métodos aplicáveis à distribuição espacial de serviços de saúde, como é o caso de farmácias. Diversos trabalhos exploram técnicas de otimização e heurísticas que podem ser adaptadas para o contexto sergipano, oferecendo suporte metodológico e conceitual.
+
+No trabalho de Belo et al. (2020), foi proposta uma abordagem multi-período e bi-objetivo para a alocação de ambulâncias na cidade de Belo Horizonte. O estudo mostra que técnicas de localização podem ser aplicadas de forma eficaz em serviços de saúde, permitindo a redução de tempos de resposta e a maximização da cobertura populacional. Essa lógica pode ser transposta para o setor farmacêutico, uma vez que o objetivo também é otimizar a acessibilidade.
+
+Já no estudo de Silva e colaboradores (2024), foi investigado o uso de metaheurísticas, como algoritmos genéticos e simulated annealing, para a localização de estações de bicicletas. Embora o objeto de estudo não seja a área da saúde, a pesquisa ilustra como métodos heurísticos podem ser utilizados para resolver problemas complexos de localização com múltiplos critérios e restrições.
+
+Por fim, a enciclopédia Wikipedia (2024) apresenta conceitos gerais sobre problemas de localização de instalações, incluindo os modelos clássicos de minisoma e minimax. Esses fundamentos oferecem a base teórica necessária para compreender e aplicar diferentes modelos ao problema da distribuição de farmácias no estado de Sergipe.
 
 \section{Método Explicado}
 
@@ -109,15 +101,16 @@ reproducibility. Table caption must be placed before the table (see Table 1)
 and the font used must also be Helvetica, 10 point, boldface, with 6 points of
 space before and after each caption.
 
-\begin{table}[ht]
-\centering
-\caption{Variables to be considered on the evaluation of interaction
-  techniques}
-\label{tab:exTable1}
-\includegraphics[width=.7\textwidth]{table.jpg}
-\end{table}
 
-\bibliographystyle{sbc}
-\bibliography{sbc-template}
+
+\begin{thebibliography}{99}
+
+\bibitem{belo2020} Belo, A. et al. (2020). Uma abordagem multi-período e bi-objetivo para alocação de ambulâncias em Belo Horizonte. *Revista de Pesquisa Operacional*.
+
+\bibitem{bike2024} Silva, R. et al. (2024). Metaheurísticas aplicadas à localização de estações de bicicletas: estudo com algoritmos genéticos e simulated annealing. *Congresso Brasileiro de Computação*.
+
+\bibitem{wikiLoc} Wikipedia. (2024). Facility location problem. Disponível em: \url{https://en.wikipedia.org/wiki/Facility_location_problem}. Acesso em: 2 set. 2025.
+
+\end{thebibliography}
 
 \end{document}
