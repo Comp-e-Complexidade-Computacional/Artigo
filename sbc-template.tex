@@ -16,24 +16,38 @@
      
 \sloppy
 
-\title{Análise da Localização Ótima de Farmácias no\\ Bairro Centro, Aracaju: Estudo de Caso}
+\title{Análise de Problemas de Localização de Instalações Por meio de Cenários Contextualizados}
 
 \author{Anthony França, Antônio Neto, Enzo Santana, Franck Vasconcelos,\\
 Murilo Mota, Rafael Gonçalves, Rene Marinho}
 
 \address{Universidade Tiradentes (UNIT)\\}
+\date{2025}
 
 \begin{document} 
 
 \maketitle
 
      
-\begin{resumo} 
-O objetivo deste estudo é identificar a localização otimizada para farmácias no bairro Centro, em Aracaju, considerando fatores geográficos, econômicos e logísticos. Buscamos determinar áreas com melhor relevo, proximidade de comércio e distribuidores de medicamentos e infraestrutura adequada para operação. Farmácias já existentes serão desconsideradas, permitindo encontrar novas geolocalizações estratégicas. Além disso, serão analisadas regiões que já possuem outras empresas, possibilitando identificar terrenos disponíveis para locação ou compra, com potencial para instalação de farmácias. A abordagem combina critérios de acessibilidade, visibilidade e conveniência para clientes, visando maximizar eficiência operacional e cobertura de mercado. Os resultados fornecerão uma base prática para planejamento urbano e expansão do setor farmacêutico no bairro.
+\begin{resumo}
+O objetivo deste trabalho é apresentar um panorama das diferentes definições dos Problemas de Localização de Instalações (\textit{Facility Location Problems} – FLPs), por meio da construção de cenários ilustrativos que exemplificam suas distintas aplicações e contextos de manifestação. Além disso, busca-se destacar as metodologias desenvolvidas para tratar cada variante do problema, ressaltando como diferentes abordagens podem ser aplicadas conforme a natureza específica do cenário analisado.
 \end{resumo}
 
-
 \section{Introdução}
+
+A busca por um posicionamento ideal de instalações constitui um elemento central para a provisão de serviços, sejam eles comerciais ou públicos, bem como para a integração de regiões por meio de infraestruturas físicas, como pontes, aeroportos e rodoviárias. No campo da Pesquisa Operacional, esse desafio é representado pelo Problema de Localização de Instalações (PLI), cujo objetivo consiste em selecionar pontos de instalação que maximizem o atendimento da demanda e a acessibilidade dos usuários. Essas decisões envolvem diferentes critérios, tais como a maximização da cobertura da demanda, a minimização de custos operacionais e a garantia de um atendimento mínimo a determinados grupos de clientes \cite{SousaFilho2012}.
+
+Diversas formulações matemáticas têm sido propostas para tratar esses objetivos, entre as quais se destacam o Problema de Localização de Máxima Cobertura (PLMC) e o Problema das P-Medianas. Ambas dependem de fatores como a distribuição geográfica da população e os tempos de deslocamento para determinar soluções viáveis e eficientes. Estudos recentes confirmam que os critérios de localização são, em grande medida, definidos para assegurar a acessibilidade, considerando simultaneamente a demanda por serviços e as distâncias de viagem \cite{KuoKung2025}.
+
+Entre os cenários nos quais os FLPs se manifestam, destaca-se a relação entre instalações e clientes. Nos casos em que a instalação é escolhida dentro de um conjunto de possíveis locais, e os clientes são alocados a essas instalações priorizando o menor custo de atendimento da demanda, tem-se a formulação conhecida como \textit{Uncapacitated Facility Location Problem} (UFLP). Já nos casos em que os clientes possuem demandas que devem ser atendidas apenas por instalações com capacidade limitada, sem possibilidade de divisão entre diferentes locais, classifica-se como \textit{Single-Source Capacitated Facility Location Problem} (CFLP) \cite{Buesing2025}.
+
+Tanto o UFLP quanto o CFLP baseiam-se em uma lógica de minimização de custos entre cliente e instalação, desconsiderando fatores subjetivos, como a preferência dos usuários por determinada instalação, o que pode influenciar sua propensão a utilizá-la ou evitá-la. Nesse contexto, a formulação do problema assume caráter de problema NP-difícil, uma vez que é necessário considerar diferentes combinações de possibilidades \cite{Kang2023}.
+
+Grande parte das formulações propostas adota cenários determinísticos, nos quais as variáveis são generalizadas e valores aproximados são utilizados como forma de viabilizar a modelagem da solução. Contudo, dada a natureza NP-difícil da maioria dos problemas de localização de instalações, há limitações inerentes na busca por soluções ótimas. Embora os modelos clássicos forneçam descrições generalistas adequadas, eles apresentam restrições significativas no tratamento de contextos incertos ou altamente dinâmicos \cite{OwenDaskin1998}.
+
+\subsection{Importância do Tema}
+
+\subsection{Objetivos}
 
 A localização de estabelecimentos comerciais desempenha papel fundamental no desempenho e na sustentabilidade de negócios. No setor farmacêutico, esse aspecto torna-se ainda mais relevante, pois envolve não apenas critérios de competitividade, mas também de acesso à saúde e bem-estar da população. A escolha inadequada do ponto de instalação pode resultar em altos custos, baixa atratividade de clientes e dificuldades logísticas no abastecimento de medicamentos.
 
@@ -58,6 +72,16 @@ abstract is published in the printed Proceedings. In this case, authors are
 invited to prepare two final versions of the paper. One, complete, to be
 published on the CD and the other, containing only the first page, with
 abstract and ``resumo'' (for papers in Portuguese).
+
+\subsection{Posicionamento de Farmácias}
+
+No seguinte cenário analisamos a aplicabilidade de um modelo de OFLP para identificar as disposições mais adequadas ao posicionamento de farmácias, com foco no bairro Centro, em Aracaju, considerando aspectos geográficos, fluxo de pessoas e possibilidade de estabelecimento. Entre os fatores analisados a proximidade de áreas comerciais e distribuidoras de medicamentos, bem como o acesso à infraestrutura necessária para a operação do estabelecimento.
+
+Com o intuito de avaliar a versatilidade do modelo, trabalhamos em cima de um primeiro cenário no qual supomos o estabelecimento de uma farmácia sem bandeira, 
+
+Com o intuito de avaliar a versatilidade do modelo, são construídos diferentes cenários que refletem a realidade da região selecionada, permitindo também inferir sobre sua aplicabilidade em outras localidades. Em alguns cenários, desconsideram-se as farmácias já existentes, de modo a identificar potenciais novas geolocalizações estratégicas, independentemente da concorrência.
+
+Para aumentar a precisão dos resultados, a análise é restrita às áreas com maior intensidade de atividade comercial, uma vez que estas oferecem condições mais adequadas para a coleta de dados. A abordagem combina critérios de acessibilidade, visibilidade e conveniência para os clientes, com o objetivo de maximizar a eficiência operacional e a cobertura de mercado. Os resultados obtidos fornecem subsídios práticos tanto para o planejamento urbano quanto para estratégias de expansão do setor farmacêutico no bairro.
 
 \section{Resultados}
 
@@ -105,11 +129,15 @@ space before and after each caption.
 
 \begin{thebibliography}{99}
 
-\bibitem{belo2020} Belo, A. et al. (2020). Uma abordagem multi-período e bi-objetivo para alocação de ambulâncias em Belo Horizonte. *Revista de Pesquisa Operacional*.
+\bibitem{SousaFilho2012} FILHO, G. S. et al. Uma arquitetura e ferramentas para problemas de localização de facilidades no setor público. São Paulo: SBC, 2012. Disponível em: <https://sol.sbc.org.br/index.php/sbsi/article/view/14428>
 
-\bibitem{bike2024} Silva, R. et al. (2024). Metaheurísticas aplicadas à localização de estações de bicicletas: estudo com algoritmos genéticos e simulated annealing. *Congresso Brasileiro de Computação*.
+\bibitem{KuoKung2025} KUNG, L.-C.; CHUANG, J.-S.; KUO, Y.-T. Optimal Allocation of Capacitated Facilities considering Time-dependent User Preference for User Number Maximization. Disponível em: <https://ssrn.com/abstract=4276750>. Acesso em: 5 set. 2025. 
 
-\bibitem{wikiLoc} Wikipedia. (2024). Facility location problem. Disponível em: \url{https://en.wikipedia.org/wiki/Facility_location_problem}. Acesso em: 2 set. 2025.
+\bibitem{Buesing2025} BÜSING, C.; GERSING, T.; WREDE, S. Insights into the computational complexity of the single-source capacitated facility location problem with customer preferences. [s.l.] Optimization Online, dez. 2024. 
+
+\bibitem{Kang2023} KANG, C.-N. et al. A service facility location problem considering customer preference and facility capacity. Computers \& Industrial Engineering, v. 177, p. 109070, 2023.
+
+\bibitem{OwenDaskin1998} OWEN, S. H.; DASKIN, M. S. Strategic facility location: A review. European Journal of Operational Research, v. 111, p. 423–447, 1998. 
 
 \end{thebibliography}
 
