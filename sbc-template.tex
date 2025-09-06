@@ -16,7 +16,7 @@
      
 \sloppy
 
-\title{Análise de Problemas de Localização de Instalações Por meio de Cenários Contextualizados}
+\title{Análise de Problemas de Localização de Instalações Em de Cenários Contextualizados}
 
 \author{Anthony França, Antônio Neto, Enzo Santana, Franck Vasconcelos,\\
 Murilo Mota, Rafael Gonçalves, Rene Marinho}
@@ -27,35 +27,40 @@ Murilo Mota, Rafael Gonçalves, Rene Marinho}
 \begin{document} 
 
 \maketitle
-
      
 \begin{resumo}
-O objetivo deste trabalho é apresentar um panorama das diferentes definições dos Problemas de Localização de Instalações (\textit{Facility Location Problems} – FLPs), por meio da construção de cenários ilustrativos que exemplificam suas distintas aplicações e contextos de manifestação. Além disso, busca-se destacar as metodologias desenvolvidas para tratar cada variante do problema, ressaltando como diferentes abordagens podem ser aplicadas conforme a natureza específica do cenário analisado.
+O presente trabalho visa apresentar um panorama das diferentes definições dos Problemas de Localização de Instalações (Facility Location Problems -- FLPs), por meio da construção de cenários ilustrativos que exemplificam suas distintas aplicações e contextos de manifestação. Ademais, busca-se destacar as metodologias desenvolvidas para tratar cada variante do problema, ressaltando como diferentes abordagens podem ser aplicadas conforme a natureza específica de cada cenário.
 \end{resumo}
 
 \section{Introdução}
 
-A busca por um posicionamento ideal de instalações constitui um elemento central para a provisão de serviços, sejam eles comerciais ou públicos, bem como para a integração de regiões por meio de infraestruturas físicas, como pontes, aeroportos e rodoviárias. No campo da Pesquisa Operacional, esse desafio é representado pelo Problema de Localização de Instalações (PLI), cujo objetivo consiste em selecionar pontos de instalação que maximizem o atendimento da demanda e a acessibilidade dos usuários. Essas decisões envolvem diferentes critérios, tais como a maximização da cobertura da demanda, a minimização de custos operacionais e a garantia de um atendimento mínimo a determinados grupos de clientes \cite{SousaFilho2012}.
+A busca por um posicionamento ideal de instalações é central para a provisão de serviços, sejam eles comerciais ou públicos, e para a integração regional por meio de infraestruturas físicas, como pontes, aeroportos e terminais rodoviários. No campo da Pesquisa Operacional, esse desafio é formulado como o Problema de Localização de Instalações (PLI), cujo objetivo é selecionar locais de instalação que maximizem o atendimento à demanda e a acessibilidade dos usuários. Essas decisões envolvem diferentes critérios, tais como maximizar a cobertura da demanda, minimizar os custos operacionais e assegurar um atendimento mínimo a determinados grupos de clientes (SOUSA FILHO, 2012; RUSHTON, 1979).
 
-Diversas formulações matemáticas têm sido propostas para tratar esses objetivos, entre as quais se destacam o Problema de Localização de Máxima Cobertura (PLMC) e o Problema das P-Medianas. Ambas dependem de fatores como a distribuição geográfica da população e os tempos de deslocamento para determinar soluções viáveis e eficientes. Estudos recentes confirmam que os critérios de localização são, em grande medida, definidos para assegurar a acessibilidade, considerando simultaneamente a demanda por serviços e as distâncias de viagem \cite{KuoKung2025}.
+Várias formulações matemáticas têm sido propostas para tratar esses objetivos, destacando-se, entre elas, o Problema de Localização de Máxima Cobertura (PLMC) e o Problema das P-Medianas. Tais modelos dependem de fatores como a distribuição geográfica da população e os tempos de deslocamento para determinar soluções viáveis e eficientes. De fato, estudos recentes confirmam que esses critérios de localização buscam garantir a acessibilidade, ponderando simultaneamente a demanda por serviços e as distâncias de viagem (KUO e KUNG, 2025).
 
-Entre os cenários nos quais os FLPs se manifestam, destaca-se a relação entre instalações e clientes. Nos casos em que a instalação é escolhida dentro de um conjunto de possíveis locais, e os clientes são alocados a essas instalações priorizando o menor custo de atendimento da demanda, tem-se a formulação conhecida como \textit{Uncapacitated Facility Location Problem} (UFLP). Já nos casos em que os clientes possuem demandas que devem ser atendidas apenas por instalações com capacidade limitada, sem possibilidade de divisão entre diferentes locais, classifica-se como \textit{Single-Source Capacitated Facility Location Problem} (CFLP) \cite{Buesing2025}.
+Entre os cenários em que os PLI se manifestam, destaca-se a relação entre instalações e clientes. Nos casos em que a instalação a ser aberta é escolhida dentre um conjunto de locais potenciais e os clientes são alocados a essas instalações visando minimizar o custo de atendimento da demanda, tem-se a formulação conhecida como Problema de Localização de Instalações sem Limitação de Capacidade (Uncapacitated Facility Location Problem -- UFLP). Por outro lado, quando as demandas dos clientes devem ser atendidas exclusivamente por instalações com capacidade limitada, sem possibilidade de fracionar a demanda entre diferentes locais, o problema é classificado como Problema de Localização de Instalações Capacitado de Fonte Única (Single-Source Capacitated Facility Location Problem -- CFLP) (BÜSING et al., 2025).
 
-Tanto o UFLP quanto o CFLP baseiam-se em uma lógica de minimização de custos entre cliente e instalação, desconsiderando fatores subjetivos, como a preferência dos usuários por determinada instalação, o que pode influenciar sua propensão a utilizá-la ou evitá-la. Nesse contexto, a formulação do problema assume caráter de problema NP-difícil, uma vez que é necessário considerar diferentes combinações de possibilidades \cite{Kang2023}.
+Tanto o UFLP quanto o CFLP baseiam-se em uma lógica de minimização de custos de transporte entre clientes e instalações, desconsiderando fatores subjetivos, como a preferência dos usuários por determinada instalação (o que pode influenciar sua propensão a utilizá-la). Nessas formulações, o problema assume caráter de NP-difícil, pois é necessário considerar diversas combinações de alocação de clientes a instalações (KANG et al., 2023).
 
-Grande parte das formulações propostas adota cenários determinísticos, nos quais as variáveis são generalizadas e valores aproximados são utilizados como forma de viabilizar a modelagem da solução. Contudo, dada a natureza NP-difícil da maioria dos problemas de localização de instalações, há limitações inerentes na busca por soluções ótimas. Embora os modelos clássicos forneçam descrições generalistas adequadas, eles apresentam restrições significativas no tratamento de contextos incertos ou altamente dinâmicos \cite{OwenDaskin1998}.
+Grande parte das formulações propostas adota cenários determinísticos, em que as variáveis de demanda e tempo são tratadas como valores fixos. Contudo, dada a natureza NP-difícil desses problemas, há limitações inerentes na busca por soluções ótimas. Mesmo os modelos clássicos, que fornecem descrições generalistas adequadas, apresentam restrições significativas em contextos com alta incerteza ou dinamicidade, que refletiriam melhor a realidade. Assim, a literatura dedica atenção à incorporação de incertezas e aspectos dinâmicos nos modelos de localização, por meio, por exemplo, de programação estocástica e análise de cenários (OWEN e DASKIN, 1998).
+
+Nas próximas seções, serão apresentadas considerações sobre a motivação e os objetivos deste trabalho. Em seguida, traçaremos um panorama dos principais estudos na área de localização de instalações, com ênfase nos trabalhos já citados (especialmente na metodologia de análise proposta por Rushton e na revisão de Owen e Daskin). Posteriormente, na seção de Metodologia, descreveremos como o tema foi abordado nos cenários analisados, e por fim serão apresentados os resultados obtidos.
 
 \subsection{Importância do Tema}
 
+Apesar das limitações em simular todos os cenários possíveis em problemas de localização de instalações, existe um amplo conjunto de pesquisas nessa área, no qual diversas abordagens foram propostas para casos extremos. Isso possibilita utilizar o conhecimento atual do campo para realizar análises que vão desde a infraestrutura existente até predições de desempenho futuro em determinada localidade. Nesse contexto, aplicar metodologias de FLP, mesmo que de forma simplificada, pode ajudar a refletir criticamente sobre como o espaço geográfico tem sido utilizado ao longo do tempo e como poderá ser utilizado no futuro (RUSHTON, 1979).
+
 \subsection{Objetivos}
+
+Este trabalho tem como objetivo realizar análises baseadas em metodologias de localização de instalações (FLP), adaptadas à realidade dos cenários sob estudo. Por meio dessas análises, busca-se evidenciar diferentes perspectivas ao confrontar cada cenário com as possibilidades que ele apresenta. Assim, adotamos um paradigma analítico restrito à realidade dos dados disponíveis, procurando extrair insights a partir dos resultados obtidos.
+
+\section{Trabalhos Relacionados}
 
 A localização de estabelecimentos comerciais desempenha papel fundamental no desempenho e na sustentabilidade de negócios. No setor farmacêutico, esse aspecto torna-se ainda mais relevante, pois envolve não apenas critérios de competitividade, mas também de acesso à saúde e bem-estar da população. A escolha inadequada do ponto de instalação pode resultar em altos custos, baixa atratividade de clientes e dificuldades logísticas no abastecimento de medicamentos.
 
 No contexto de Aracaju, especificamente no bairro Centro, observa-se uma concentração significativa de atividades comerciais e serviços. Trata-se de uma região com fluxo intenso de pessoas, proximidade de órgãos públicos e presença de distribuidores de medicamentos, o que torna a análise de localização particularmente estratégica. Este estudo propõe identificar os pontos mais adequados para a instalação de novas farmácias, desconsiderando as já existentes, a fim de apontar oportunidades reais de expansão no setor.
 
 Para tanto, são considerados critérios como relevo, acessibilidade, proximidade de polos comerciais e disponibilidade de terrenos ou imóveis para locação. A análise visa fornecer subsídios práticos tanto para empreendedores que desejam investir no setor farmacêutico quanto para planejadores urbanos interessados em compreender a dinâmica de serviços essenciais em áreas centrais da capital sergipana.
-
-\section{Trabalhos Relacionados}
 
 A literatura sobre problemas de localização de instalações apresenta uma variedade de métodos aplicáveis à distribuição espacial de serviços de saúde, como é o caso de farmácias. Diversos trabalhos exploram técnicas de otimização e heurísticas que podem ser adaptadas para o contexto sergipano, oferecendo suporte metodológico e conceitual.
 
@@ -97,39 +102,11 @@ The subsection titles must be in boldface, 12pt, flush left.
 \section{Conclusões}\label{sec:figs}
 
 
-Figure and table captions should be centered if less than one line
-(Figure~\ref{fig:exampleFig1}), otherwise justified and indented by 0.8cm on
-both margins, as shown in Figure~\ref{fig:exampleFig2}. The caption font must
-be Helvetica, 10 point, boldface, with 6 points of space before and after each
-caption.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.5\textwidth]{fig1.jpg}
-\caption{A typical figure}
-\label{fig:exampleFig1}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.3\textwidth]{fig2.jpg}
-\caption{This figure is an example of a figure caption taking more than one
-  line and justified considering margins mentioned in Section~\ref{sec:figs}.}
-\label{fig:exampleFig2}
-\end{figure}
-
-In tables, try to avoid the use of colored or shaded backgrounds, and avoid
-thick, doubled, or unnecessary framing lines. When reporting empirical data,
-do not use more decimal digits than warranted by their precision and
-reproducibility. Table caption must be placed before the table (see Table 1)
-and the font used must also be Helvetica, 10 point, boldface, with 6 points of
-space before and after each caption.
-
-
-
 \begin{thebibliography}{99}
 
 \bibitem{SousaFilho2012} FILHO, G. S. et al. Uma arquitetura e ferramentas para problemas de localização de facilidades no setor público. São Paulo: SBC, 2012. Disponível em: <https://sol.sbc.org.br/index.php/sbsi/article/view/14428>
+
+\bibitem{Rushton1979} RUSHTON, G. Optimal Location of Facilities. [s.l.] Department of Geography, University of Iowa, jan. 1979.
 
 \bibitem{KuoKung2025} KUNG, L.-C.; CHUANG, J.-S.; KUO, Y.-T. Optimal Allocation of Capacitated Facilities considering Time-dependent User Preference for User Number Maximization. Disponível em: <https://ssrn.com/abstract=4276750>. Acesso em: 5 set. 2025. 
 
