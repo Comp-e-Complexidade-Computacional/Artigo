@@ -42,7 +42,7 @@ Entre os cenários em que os PLI se manifestam, destaca-se a relação entre ins
 
 Tanto o UFLP quanto o CFLP baseiam-se em uma lógica de minimização de custos de transporte entre clientes e instalações, desconsiderando fatores subjetivos, como a preferência dos usuários por determinada instalação (o que pode influenciar sua propensão a utilizá-la). Nessas formulações, o problema assume caráter de NP-difícil, pois é necessário considerar diversas combinações de alocação de clientes a instalações (KANG et al., 2023).
 
-Grande parte das formulações propostas adota cenários determinísticos, em que as variáveis de demanda e tempo são tratadas como valores fixos. Contudo, dada a natureza NP-difícil desses problemas, há limitações inerentes na busca por soluções ótimas. Mesmo os modelos clássicos, que fornecem descrições generalistas adequadas, apresentam restrições significativas em contextos com alta incerteza ou dinamicidade, que refletiriam melhor a realidade. Assim, a literatura dedica atenção à incorporação de incertezas e aspectos dinâmicos nos modelos de localização, por meio, por exemplo, de programação estocástica e análise de cenários (OWEN e DASKIN, 1998).
+Grande parte das formulações propostas adota cenários determinísticos, em que as variáveis de demanda e tempo são tratadas como valores fixos. Contudo, dada a natureza NP-difícil dos problemas de otimização, há limitações inerentes na busca por soluções ótimas. Mesmo os modelos clássicos, que fornecem descrições generalistas adequadas, apresentam restrições significativas em contextos com alta incerteza ou dinamicidade, que refletiriam melhor a realidade. Assim, a literatura dedica atenção à incorporação de incertezas e aspectos dinâmicos nos modelos de localização, por meio, por exemplo, de programação estocástica e análise de cenários (OWEN e DASKIN, 1998).
 
 Nas próximas seções, serão apresentadas considerações sobre a motivação e os objetivos deste trabalho. Em seguida, traçaremos um panorama dos principais estudos na área de localização de instalações, com ênfase nos trabalhos já citados (especialmente na metodologia de análise proposta por Rushton e na revisão de Owen e Daskin). Posteriormente, na seção de Metodologia, descreveremos como o tema foi abordado nos cenários analisados, e por fim serão apresentados os resultados obtidos.
 
@@ -52,31 +52,19 @@ Apesar das limitações em simular todos os cenários possíveis em problemas de
 
 \subsection{Objetivos}
 
-Este trabalho tem como objetivo realizar análises baseadas em metodologias de localização de instalações (FLP), adaptadas à realidade dos cenários sob estudo. Por meio dessas análises, busca-se evidenciar diferentes perspectivas ao confrontar cada cenário com as possibilidades que ele apresenta. Assim, adotamos um paradigma analítico restrito à realidade dos dados disponíveis, procurando extrair insights a partir dos resultados obtidos.
+Este trabalho pretende realizar análises baseadas em metodologias de localização de instalações (FLP), adaptadas à realidade dos cenários sob estudo. Por meio dessas análises, busca-se evidenciar diferentes perspectivas ao confrontar cada cenário com as possibilidades que ele apresenta. Assim, adotamos um paradigma analítico restrito à realidade dos dados disponíveis, procurando extrair percepções a partir dos resultados obtidos.
 
 \section{Trabalhos Relacionados}
 
-A localização de estabelecimentos comerciais desempenha papel fundamental no desempenho e na sustentabilidade de negócios. No setor farmacêutico, esse aspecto torna-se ainda mais relevante, pois envolve não apenas critérios de competitividade, mas também de acesso à saúde e bem-estar da população. A escolha inadequada do ponto de instalação pode resultar em altos custos, baixa atratividade de clientes e dificuldades logísticas no abastecimento de medicamentos.
+Segundo Owen e Daskin (1998), a teoria da localização de instalações iniciou-se em 1909 com Alfred Weber, que buscou posicionar um depósito de modo a minimizar a distância total aos clientes. Esses trabalhos iniciais foram essencialmente analíticos e restritos a formulações matemáticas e representações gráficas básicas, com aplicação prática muito limitada. Somente na década de 1960, com o advento da computação, pesquisadores puderam propor métodos mais aplicáveis a cenários reais de localização. Mesmo assim, as formulações clássicas mantiveram-se estáticas e determinísticas, assumindo parâmetros de demanda e tempos de deslocamento fixos, o que restringe sua flexibilidade diante de condições variáveis.
 
-No contexto de Aracaju, especificamente no bairro Centro, observa-se uma concentração significativa de atividades comerciais e serviços. Trata-se de uma região com fluxo intenso de pessoas, proximidade de órgãos públicos e presença de distribuidores de medicamentos, o que torna a análise de localização particularmente estratégica. Este estudo propõe identificar os pontos mais adequados para a instalação de novas farmácias, desconsiderando as já existentes, a fim de apontar oportunidades reais de expansão no setor.
+Estudos mais recentes têm buscado expandir essas abordagens tradicionais incorporando modularidade e dinamicidade. Alarcon-Gerbier e Buscher (2022) ressaltam que a capacidade modular (unidades de produção realocáveis ou expansíveis) e as instalações móveis vêm recebendo atenção crescente, com aplicações emergentes em diversos setores. De modo similar, Kang et al. (2023) propuseram um modelo de localização de serviços que leva em conta a preferência dos clientes pelas instalações, além de considerar explicitamente as capacidades das unidades, evidenciando a complexidade adicional introduzida por esse fator. Nesses modelos modernos, devem ser ponderados não apenas custos de transporte e cobertura de demanda, mas também escolhas comportamentais dos usuários, ampliando os requisitos de viabilidade do sistema. Nesse contexto, trabalhos recentes destacam a alta complexidade desses problemas, por exemplo, Büsing et al. (2024) mostram que determinar uma alocação viável no problema capacitado de fonte única com preferências (SSCFLP-CP) já é \textit{NP}-completo, ilustrando o caráter intratável da variante.
 
-Para tanto, são considerados critérios como relevo, acessibilidade, proximidade de polos comerciais e disponibilidade de terrenos ou imóveis para locação. A análise visa fornecer subsídios práticos tanto para empreendedores que desejam investir no setor farmacêutico quanto para planejadores urbanos interessados em compreender a dinâmica de serviços essenciais em áreas centrais da capital sergipana.
-
-A literatura sobre problemas de localização de instalações apresenta uma variedade de métodos aplicáveis à distribuição espacial de serviços de saúde, como é o caso de farmácias. Diversos trabalhos exploram técnicas de otimização e heurísticas que podem ser adaptadas para o contexto sergipano, oferecendo suporte metodológico e conceitual.
-
-No trabalho de Belo et al. (2020), foi proposta uma abordagem multi-período e bi-objetivo para a alocação de ambulâncias na cidade de Belo Horizonte. O estudo mostra que técnicas de localização podem ser aplicadas de forma eficaz em serviços de saúde, permitindo a redução de tempos de resposta e a maximização da cobertura populacional. Essa lógica pode ser transposta para o setor farmacêutico, uma vez que o objetivo também é otimizar a acessibilidade.
-
-Já no estudo de Silva e colaboradores (2024), foi investigado o uso de metaheurísticas, como algoritmos genéticos e simulated annealing, para a localização de estações de bicicletas. Embora o objeto de estudo não seja a área da saúde, a pesquisa ilustra como métodos heurísticos podem ser utilizados para resolver problemas complexos de localização com múltiplos critérios e restrições.
-
-Por fim, a enciclopédia Wikipedia (2024) apresenta conceitos gerais sobre problemas de localização de instalações, incluindo os modelos clássicos de minisoma e minimax. Esses fundamentos oferecem a base teórica necessária para compreender e aplicar diferentes modelos ao problema da distribuição de farmácias no estado de Sergipe.
+As proposições iniciais forneceram uma base conceitual sólida, mas eram restritas ao funcionamento ideal das instalações e a atendimentos simplificados. Com o avanço da área, passaram a ser considerados cenários mais complexos, como interrupções no sistema. Um exemplo notável é o estudo de Ramshani et al. (2019), que abordam um modelo de localização de dois níveis (\textit{Two-Level UFLP}) sob incertezas de disrupção. Os autores desenvolvem formulações matemáticas e heurísticas (por exemplo, busca tabu) para lidar com paradas de funcionamento em pontos da rede, mostrando como essas descontinuações afetam a seleção de locais e alocações. Esses avanços ilustram a tendência atual de modelar problemas de localização de forma mais realista, incorporando aspectos de resiliência operacional e logística associada às instalações.
 
 \section{Método Explicado}
 
-In some conferences, the papers are published on CD-ROM while only the
-abstract is published in the printed Proceedings. In this case, authors are
-invited to prepare two final versions of the paper. One, complete, to be
-published on the CD and the other, containing only the first page, with
-abstract and ``resumo'' (for papers in Portuguese).
+Nos primeiros trabalhos acerca do problema de localizações, desenvolvidos por Alfred Weber, foi proposto o primeiro modelo das atuais definições de P-Mediano, P-Minimax e P-
 
 \subsection{Posicionamento de Farmácias}
 
@@ -115,6 +103,8 @@ The subsection titles must be in boldface, 12pt, flush left.
 \bibitem{Kang2023} KANG, C.-N. et al. A service facility location problem considering customer preference and facility capacity. Computers \& Industrial Engineering, v. 177, p. 109070, 2023.
 
 \bibitem{OwenDaskin1998} OWEN, S. H.; DASKIN, M. S. Strategic facility location: A review. European Journal of Operational Research, v. 111, p. 423–447, 1998. 
+
+\bibitem{Alarcon-GerbierBuscher2022} ALARCONGERBIER, E.; BUSCHER, U. Modular and mobile facility location problems: A systematic review. Computers \& Industrial Engineering, v. 173, p. 108734, 2022. 
 
 \end{thebibliography}
 
