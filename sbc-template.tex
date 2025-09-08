@@ -8,6 +8,7 @@
 \usepackage[none]{hyphenat}
 \usepackage{amsmath}
 \usepackage{amssymb} 
+\usepackage{float}
 
 \makeatletter
 \patchcmd{\@startsection}
@@ -18,7 +19,7 @@
      
 \sloppy
 
-\title{Análise de Problemas de Localização de Instalações Em de Cenários Contextualizados}
+\title{Cobertura e Acessibilidade: Aplicação de P-Médianas e PLMC em um Recorte Urbano}
 
 \author{Anthony França, Antônio Neto, Enzo Santana, Franck Vasconcelos,\\
 Murilo Mota, Rafael Gonçalves, Rene Marinho}
@@ -31,7 +32,7 @@ Murilo Mota, Rafael Gonçalves, Rene Marinho}
 \maketitle
      
 \begin{resumo}
-Este estudo apresenta um panorama das diversas definições dos Problemas de Localização de Instalações (Facility Location Problems - FLPs), por meio de cenários ilustrativos que evidenciam suas distintas aplicações. Além disso, destaca-se as metodologias desenvolvidas para tratar cada variante do problema, ressaltando como diferentes abordagens podem ser empregadas conforme a natureza específica de cada contexto.
+Este estudo apresenta um panorama das principais formulações dos Problemas de Localização de Instalações (Facility Location Problems — FLPs) e suas aplicações em contextos urbanos. Apresenta-se um cenário ilustrativo que compara duas formulações clássicas: o Problema das P-Medianas e o Problema de Localização de Máxima Cobertura (PLMC). Descrevem-se as metodologias empregadas para cada variante e discutem-se as implicações práticas e as limitações de uma análise exploratória baseada em dados abertos, destacando como diferentes abordagens servem a objetivos distintos, reduzir deslocamentos médios ou ampliar a cobertura territorial.
 \end{resumo}
 
 \section{Introdução}
@@ -42,19 +43,29 @@ Várias formulações matemáticas têm sido propostas para atender a esses obje
 
 Entre os cenários de aplicação dos PLI, destaca-se a relação entre instalações e clientes. Quando a instalação a ser aberta é escolhida dentre um conjunto de locais potenciais e os clientes são alocados a essas instalações visando minimizar o custo total de atendimento à demanda, obtém-se a formulação conhecida como Problema de Localização de Instalações sem Limitação de Capacidade (Uncapacitated Facility Location Problem - UFLP). Por outro lado, quando as demandas dos clientes devem ser atendidas exclusivamente por instalações com capacidade limitada, sem possibilidade de fracionar a demanda entre diferentes locais, o problema é classificado como o Problema de Localização de Instalações Capacitado de Fonte Única (Single-Source Capacitated Facility Location Problem - CFLP).
 
-Tanto o UFLP quanto o CFLP baseiam-se na minimização dos custos de transporte entre clientes e instalações, desconsiderando fatores subjetivos, como a preferência dos usuários por determinada instalação (o que pode influenciar sua propensão a utilizá-la). Nesse contexto, esses problemas assumem caráter NP-difícil, uma vez que é necessário considerar numerosas combinações de alocação de clientes a instalações (Kang et al., 2023).
+Tanto o UFLP quanto o CFLP baseiam-se na minimização dos custos de transporte entre clientes e instalações, desconsiderando fatores subjetivos, como a preferência dos usuários por determinada instalação (o que pode influenciar sua propensão a utilizá-la). Nesse contexto, esses problemas assumem caráter NP-difícil, uma vez que é necessário considerar numerosas combinações de alocação de clientes a instalações (Kang et al., 2023; Büsing et al., 2024).
 
 Grande parte das formulações propostas adota cenários determinísticos, nos quais variáveis de demanda e tempo de viagem são tratadas como valores fixos. No entanto, dada a natureza NP-difícil desses problemas, surgem limitações inerentes na busca por soluções ótimas. Mesmo os modelos clássicos, que fornecem descrições generalistas adequadas, apresentam restrições significativas em contextos de alta incerteza ou dinamicidade, que poderiam refletir de forma mais realista a complexidade dos cenários reais. Incertezas e aspectos dinâmicos podem ser incorporados aos modelos de localização por meio de ferramentas como programação estocástica e análise de cenários (Owen e Daskin, 1998).
 
-A seguir, são apresentadas considerações sobre a motivação e os objetivos deste trabalho. Em seguida, traçaremos um panorama dos principais estudos na área de localização de instalações, enfatizando os trabalhos mencionados (especialmente a metodologia de análise utilizada por Rushton e a revisão de Owen e Daskin). Posteriormente, na seção de Fundamentação Teórica, descreveremos as formulações adotadas para os problemas estudados, e, por fim, na seção de Metodologia, detalharemos os procedimentos adotados na análise dos cenários.
+A seguir, são apresentadas considerações sobre a motivação e os objetivos deste trabalho. Em seguida, traçaremos um panorama dos principais estudos na área de localização de instalações, enfatizando os trabalhos mencionados (especialmente a metodologia de análise utilizada por Rushton e a revisão de Owen e Daskin). Posteriormente, na seção de Fundamentação Teórica, descreveremos as formulações adotadas para os problemas estudados, e, por fim, nas seções de Metodologia e Resultados, detalharemos os procedimentos adotados na análise do cenário.
 
-\subsection{Importância do Tema}
+\subsection{Importância do tema}
 
-Apesar das limitações em simular todos os cenários possíveis nos problemas de localização de instalações, existe um conjunto extenso de pesquisas nessa área, no qual diversas abordagens foram propostas para casos extremos. Esse arcabouço de conhecimento possibilita realizar análises que vão desde o estudo da infraestrutura existente até a previsão de desempenho futuro em uma determinada localidade. Nesse contexto, a aplicação de metodologias de FLP, mesmo que de forma simplificada, contribui para uma reflexão crítica acerca de como o espaço geográfico tem sido utilizado ao longo do tempo e de como poderá ser utilizado no futuro (Rushton, 1979).
+Os problemas de localização de instalações constituem um campo consolidado de pesquisa, com aplicações que variam desde estudos descritivos da infraestrutura existente até modelos preditivos para o planejamento futuro. Apesar das dificuldades inerentes à simulação de múltiplos cenários reais, em particular quando os dados são limitados ou apresentam incerteza, esse arcabouço teórico oferece ferramentas úteis para analisar a relação entre oferta de serviços e padrões espaciais de demanda.  
+
+No presente trabalho, ainda que de forma simplificada e exploratória, procedeu-se à extração e ao tratamento de dados abertos (OpenStreetMap). Essas operações possibilitaram gerar representações cartográficas e indicadores básicos de acessibilidade e cobertura. Assim, a relevância prática deste exercício reside na sua capacidade de transformar dados geoespaciais disponíveis em evidências interpretáveis que podem subsidiar reflexões e decisões de planejamento urbano preliminares.
 
 \subsection{Objetivos}
 
-O objetivo deste trabalho é realizar análises fundamentadas em metodologias de localização de instalações (FLP), adaptadas à realidade dos cenários estudados. Por meio dessas análises, busca-se evidenciar diferentes perspectivas ao confrontar cada cenário com as possibilidades específicas que ele apresenta. Adota-se, assim, um paradigma analítico condizente com a realidade dos dados disponíveis, visando extrair percepções a partir dos resultados obtidos.
+O objetivo deste estudo foi conduzir uma análise exploratória, baseada em métodos clássicos de localização de instalações, para examinar a distribuição espacial das farmácias no bairro Centro de Aracaju, a partir de dados extraídos do OpenStreetMap. Mais especificamente, os objetivos realizados foram:
+
+\begin{itemize}
+    \item obter e preparar dados geoespaciais do OSM relativos às farmácias do bairro;
+    \item gerar mapas de localização e faixas de cobertura para pedestres, raio de 400\,m, e analisar qualitativamente a sobreposição e as lacunas de cobertura observadas;
+    \item ilustrar, de maneira conceitual, o comportamento esperado de duas formulações clássicas: o Problema das P-Medianas e o Problema de Localização de Máxima Cobertura (PLMC).
+\end{itemize}
+
+Ressalta-se que o objetivo não incluiu a realização de otimizações numéricas exaustivas nem a modelagem estocástica da demanda; ao invés disso, priorizou-se uma abordagem pragmática e descritiva, adequada ao caráter exploratório do estudo e à disponibilidade dos dados utilizados.
 
 \section{Trabalhos Relacionados}
 
@@ -62,9 +73,7 @@ Segundo Owen e Daskin (1998), a teoria da localização de instalações teve in
 
 Estudos mais recentes têm buscado expandir essas abordagens tradicionais, incorporando conceitos de modularidade e dinamicidade. Alarcon-Gerbier e Buscher (2022) ressaltam que a modularidade, viabilizada por meio de unidades de produção realocáveis ou expansíveis e instalações móveis, vem recebendo atenção crescente, com aplicações emergentes em diversos setores. De modo similar, Kang et al. (2023) propuseram um modelo de localização de serviços que considera as preferências dos clientes pelas instalações, além de levar em conta explicitamente as capacidades das unidades, evidenciando a complexidade adicional introduzida por esses fatores. Nesses modelos modernos, pesquisadores ponderam não apenas os custos de transporte e a cobertura da demanda, mas também escolhas comportamentais dos usuários, ampliando os requisitos de viabilidade do sistema.
 
-Nesse contexto, trabalhos recentes ressaltam a elevada complexidade desses problemas. Por exemplo, Büsing et al. (2024) demonstram que determinar uma alocação viável no problema capacitado de fonte única com preferências (CFLP-CP) já é NP-completo, ilustrando o caráter intratável dessa variante.
-
-As primeiras proposições forneceram uma base conceitual sólida, porém restrita a cenários ideais de operação e atendimentos simplificados. Com o avanço da área, passaram a ser considerados contextos mais complexos, como interrupções no sistema. Um exemplo notável é o estudo de Ramshani et al. (2019), que aborda um modelo de localização de dois níveis (Two-Level UFLP) sob incertezas de disrupção. Os autores desenvolvem formulações matemáticas e heurísticas para lidar com paralisações em pontos da rede, demonstrando como essas descontinuidades afetam a seleção de locais e as alocações. Esses avanços ilustram a tendência atual de modelagem mais realista dos problemas de localização, incorporando aspectos de resiliência operacional e logística associada às instalações.
+As primeiras proposições forneceram uma base conceitual sólida, porém restrita a cenários ideais de operação e atendimentos simplificados. Com o avanço da área, passaram a ser considerados contextos mais complexos, como interrupções no sistema. Um exemplo interessante é o estudo de Ramshani et al. (2019), que aborda um modelo de localização de dois níveis (Two-Level UFLP) sob incertezas de disrupção. Os autores desenvolvem formulações matemáticas e heurísticas para lidar com paralisações em pontos da rede, demonstrando como essas descontinuidades afetam a seleção de locais e as alocações. Esses avanços ilustram a tendência atual de modelagem mais realista dos problemas de localização, incorporando aspectos de resiliência operacional e logística associada às instalações.
 
 \section{Fundamentação Teórica}
 
@@ -75,7 +84,6 @@ Segundo Owen e Daskin (1998), embora a Programação Inteira seja a base predomi
 Como alternativas, Owen e Daskin (1998) sugerem métodos dinâmicos e estocásticos. Os métodos dinâmicos são indicados quando o cenário presente é conhecido, mas há interesse em projetar soluções para períodos futuros, considerando possíveis alterações no sistema. Já os métodos estocásticos permitem modelar explicitamente a incerteza, ao incorporar variáveis aleatórias relacionadas a fatores como demanda, custos e tempos de viagem. Nesse caso, a solução do problema busca identificar a localização ótima das instalações por meio de avaliações probabilísticas das variáveis ou da análise de cenários alternativos, caracterizando um modelo de planejamento baseado em cenários.
 
 Neste trabalho, serão desenvolvidas análises fundamentadas em duas formulações clássicas da literatura: o Problema das P-Medianas, formulado por Hakimi (1964), e o Problema de Localização de Máxima Cobertura (PLMC), descrito por Church e ReVelle (1976). O Problema das P-Medianas consiste em alocar instalações de modo a minimizar o tempo médio de deslocamento entre cada cliente e a instalação que o atende. Nesse contexto, a formulação busca identificar posições ideais de instalações de forma que a acessibilidade seja maximizada e os custos de deslocamento sejam reduzidos ao mínimo possível. A formulação matemática do problema das P-Medianas pode ser expressa como um modelo de Programação Inteira da seguinte forma:
-
 \[
 \begin{aligned}
 i \in I\ (I=\{1,\ldots,n\}) &\quad \text{índice/conjunto de clientes},\\
@@ -143,55 +151,86 @@ O modelo de Programação Inteira do PLMC pode ser formulado como:
 & z_i \in \{0,1\}, && \quad \forall i \in I.
 \end{alignat*}
 
-Nos cenários descritos a seguir, esses dois métodos foram utilizados para analisar a disposição de serviços e infraestruturas no bairro Centro de Aracaju, com base em dados obtidos pelo OpenStreetMap. Nos cenários, o bairro foi representado por uma malha regular e as instalações do serviço analisado foram identificadas a partir dos dados do OpenStreetMap. Em seguida, avaliou-se o posicionamento dessas instalações segundo o problema das P-Medianas e o PLMC, conforme detalhado a seguir.
+No cenário descrito a seguir, esses dois métodos foram utilizados para analisar a disposição de instalações de farmácias no bairro Centro de Aracaju, com base em dados obtidos pelo OpenStreetMap. O bairro foi representado em uma projeção cartográfica e os estabelecimentos foram identificados a partir dos dados do OpenStreetMap. Em seguida, avaliou-se o posicionamento dessas instalações segundo o problema das P-Medianas e o PLMC, conforme detalhado a seguir.
 
 \section{Procedimentos Metodológicos}
 
-Esta pesquisa adota uma abordagem exploratória, fundamentada em modelos clássicos de localização de instalações, visando analisar a distribuição espacial de serviços no bairro Centro de Aracaju. Optou-se por uma proposta metodológica simples, destinada apenas a ilustrar como conceitos consolidados na literatura podem ser aplicados a um recorte territorial específico, sem pretensão de exaustividade ou sofisticação técnica. O procedimento metodológico foi estruturado em quatro etapas principais:
+Esta pesquisa adota uma abordagem exploratória fundamentada em modelos clássicos de localização de instalações, visando analisar a distribuição espacial de estabelecimentos de farmácia no bairro Centro de Aracaju. Optou-se por uma metodologia simples, meramente ilustrativa, para demonstrar como conceitos consolidados na literatura podem ser aplicados a um recorte territorial específico, sem pretensão de exaustividade ou sofisticação técnica. O procedimento metodológico foi estruturado em quatro etapas principais:
 
 \subsection{Coleta e preparação dos dados}
 
-Inicialmente, foram obtidos dados espaciais abertos por meio da plataforma \textit{OpenStreetMap} (OSM), incluindo informações sobre vias, pontos de interesse e infraestrutura existente no bairro Centro. Para fins analíticos, o espaço geográfico foi discretizado em uma malha de células regulares (grid), permitindo uma representação simplificada tanto da demanda quanto das possíveis localizações de serviços.
-
-Ademais, o tratamento necessário para a implementação dos métodos foi realizada utilizando um \textit{notebook} da plataforma \textit{Google Colab}, todos os códigos foram escritos em Python, utilizando as seguintes bibliotecas:
+Dados espaciais de acesso aberto foram obtidos por meio da plataforma OpenStreetMap (OSM). Ademais, o tratamento dos dados e a implementação dos métodos foram realizados em um notebook da plataforma Google Colab. Todo o código foi escrito em \texttt{Python}, utilizando-se as seguintes bibliotecas:
 
 \begin{itemize}
-    \item osmx: Acesso a base de dados do OSM;
-    \item folium: Criação da representação em mapa;
-    \item shapely: Divisão do mapa em células;
-    \item geopandas: Tratamento necessário para determinar presença de um elemento do OSM em uma célula do grid;
+    \item \texttt{osmnx}: acesso e consulta a dados geográficos do OSM;
+    \item \texttt{folium}: criação de mapas interativos para visualização geográfica;
+    \item \texttt{geopandas}: tratamento de dados espaciais;
 \end{itemize}
 
 \subsection{Modelagem conceitual dos problemas}
 
-Na etapa seguinte, selecionaram-se dois modelos de referência da literatura: o Problema das P-Medianas e o Problema de Localização de Máxima Cobertura (PLMC). O primeiro busca identificar locais de instalação que minimizem a distância média de deslocamento entre usuários e serviços. O segundo procura maximizar a proporção da demanda atendida dentro de um raio de cobertura pré-definido. A aplicação conceitual desses modelos permite confrontar duas perspectivas de análise distintas: uma orientada pela eficiência de deslocamentos e outra voltada para a abrangência do atendimento.
+Na etapa seguinte, adotaram-se dois modelos clássicos da literatura de localização: o \emph{Problema das P-Medianas} e o \emph{Problema de Localização de Máxima Cobertura} (PLMC). O modelo das P-Medianas objetiva identificar pontos de instalação que minimizem a distância média de deslocamento entre usuários e serviços, enquanto o PLMC busca maximizar a fração da demanda atendida dentro de um raio de cobertura predefinido. A comparação conceitual desses modelos permite analisar o mesmo conjunto de dados sob duas perspectivas distintas, uma orientada pela eficiência dos deslocamentos, acessibilidade média, e outra focada na amplitude da cobertura do serviço.
 
-\subsection{Definição dos critérios de avaliação}
+\subsection{Análise e interpretação do cenário}
 
-Os cenários analisados serão avaliados a partir de critérios simples, tais como: 
-\begin{itemize} 
-\item (i) \textbf{acessibilidade}, medida pela proximidade entre pontos de demanda e instalações;
-\item (ii) \textbf{cobertura}, definida como a quantidade de usuários atendidos em uma distância máxima aceitável;
-\end{itemize}
-Esses critérios visam oferecer uma interpretação qualitativa dos resultados, evitando o uso de métricas complexas ou análises probabilísticas.
-
-\subsection{Análise e interpretação dos cenários}
-
-Por fim, os cenários resultantes da aplicação conceitual dos modelos servirão de base para discussão. Pretende-se evidenciar como diferentes formulações de problemas de localização podem conduzir a interpretações distintas sobre a disposição espacial de serviços no bairro estudado. Ressalta-se que a natureza exploratória da metodologia adotada implica limitações quanto à generalização dos resultados, os quais devem ser interpretados como ilustrações preliminares do potencial de aplicação dos modelos de localização em contextos urbanos.
+Por fim, o cenário resultante da aplicação conceitual do modelo servirá de base para discussão. Pretende-se destacar como diferentes formulações de problemas de localização podem conduzir a interpretações distintas sobre a disposição espacial de serviços no bairro estudado. Ressalta-se que, devido ao caráter exploratório da metodologia adotada, os resultados não são generalizáveis e devem ser interpretados como ilustrações preliminares do potencial de aplicação desses modelos em contextos urbanos.
 
 \section{Resultados}
+\label{sec:resultados}
 
-Section titles must be in boldface, 13pt, flush left. There should be an extra
-12 pt of space before each title. Section numbering is optional. The first
-paragraph of each section should not be indented, while the first lines of
-subsequent paragraphs should be indented by 1.27 cm.
+Nesta seção apresentam-se os resultados obtidos a partir da aplicação exploratória dos modelos de localização discutidos na Seção de Procedimentos Metodológicos. A execução foi demonstrada por meio de uma representação cartográfica do Centro de Aracaju, com base nas localizações das farmácias cadastradas no OpenStreetMap (OSM). O objetivo é evidenciar, de forma qualitativa e comparativa, os efeitos de duas formulações clássicas de localização: o Problema das P-Medianas e o Problema de Localização de Máxima Cobertura.
 
-\subsection{Subsections}
+\subsection{Mapeamento e cobertura observada}
 
-The subsection titles must be in boldface, 12pt, flush left.
+A Figura~\ref{fig:loc-farmacias} apresenta a localização das farmácias identificadas no OSM. A Figura~\ref{fig:cobertura-farmacias} mostra as faixas de cobertura para pedestres obtidas ao redor de cada farmácia, empregando-se um raio de 400\,m como referência exploratória.
 
-\section{Conclusões}\label{sec:figs}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{Artigo/map-farmacias-loc.png}
+    \caption{Localização das farmácias no Centro de Aracaju identificadas no OSM.}
+    \label{fig:loc-farmacias}
+\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{Artigo/map-farmacias-cobertura.png}
+    \caption{Faixas de cobertura das farmácias com raio de 400\,m.}
+    \label{fig:cobertura-farmacias}
+\end{figure}
+
+\subsection{Análise qualitativa}
+
+Ao analisar a Figura~\ref{fig:cobertura-farmacias} é possível perceber as seguintes situações:
+
+\begin{itemize}
+    \item \textbf{Concentração central:} há sobreposição significativa das faixas de cobertura na porção central do bairro, indicando elevada oferta e redundância de serviços nessa área.
+    \item \textbf{Lacunas:} nas regiões mais afastadas do núcleo observa-se ausência de cobertura, sinalizando menores níveis de acessibilidade sob o critério adotado (400\,m).
+    \item \textbf{Padrão espacial da oferta:} a distribuição das farmácias tende a se concentrar na região com um maior fluxo comercial, comportamento compatível com decisões que visam reduzir a distância entre o estabelecimento e os clientes.
+\end{itemize}
+
+\subsection{Interpretação comparativa: PLMC vs. P-Medianas}
+
+Comparando as duas abordagens conceituais aplicadas ao mesmo conjunto de dados, verifica-se o seguinte:
+
+\begin{itemize}
+    \item O \emph{PLMC} enfatiza a expansão da fração de demanda coberta em um raio predefinido; em cenários com \(P\) restrito e \(d\) curto, a tendência é dispersar instalações para reduzir lacunas de atendimento.
+    \item O modelo das P-Medianas privilegia a minimização da distância média de deslocamento, o que tende a concentrar instalações em áreas de maior densidade de demanda, aumentando a eficiência média de deslocamento, porém potencialmente deixando zonas mais distantes descobertas.
+    \item No caso estudado, a configuração observada das farmácias aproxima-se mais da lógica das P-Medianas: há prioridade na redução das distâncias médias, com consequente presença de lacunas de cobertura em áreas mais remotas.
+\end{itemize}
+
+\section{Conclusão}
+Em síntese, os resultados deste estudo sugerem que a disposição atual das farmácias no Centro de Aracaju favorece a \emph{acessibilidade média} em detrimento da \emph{cobertura máxima} no raio considerado (400\,m). Contudo, tais conclusões são preliminares e limitadas por certas restrições metodológicas:
+
+\begin{itemize}
+    \item O raio de cobertura adotado (400\,m) é arbitrário e não considera diferentes modais de transporte, o que pode afetar a interpretação dos resultados.
+    \item A análise foi exploratória e não incluiu simulações estocásticas ou otimizações formais, o que reduz a robustez das conclusões.
+\end{itemize}
+
+Recomenda-se que estudos futuros acerca do cenário elaborado expandam o escopo da aplicação através das seguintes proposições:
+\begin{itemize}
+    \item Realizar avaliação conjunta dos dois modelos, examinando possível trade-offs entre o número de farmácias e a distância média dos clientes, incluindo variáveis socioeconômicas e fluxos de demanda para formalizar uma decisão de planejamento.
+    \item Explorem outras formulações de localização, como, CFLP ou TUFLP, por exemplo, e considerem a inclusão de novos elos da cadeia farmacêutica, distribuidoras e clínicas, para ampliar a abrangência da análise.
+\end{itemize}
 
 \begin{thebibliography}{99}
 
@@ -201,7 +240,7 @@ The subsection titles must be in boldface, 12pt, flush left.
 
 \bibitem{KuoKung2025} KUNG, L.-C.; CHUANG, J.-S.; KUO, Y.-T. Optimal Allocation of Capacitated Facilities considering Time-dependent User Preference for User Number Maximization. Disponível em: <https://ssrn.com/abstract=4276750>. Acesso em: 5 set. 2025. 
 
-\bibitem{Buesing2025} BÜSING, C.; GERSING, T.; WREDE, S. Insights into the computational complexity of the single-source capacitated facility location problem with customer preferences. [s.l.] Optimization Online, dez. 2024. 
+\bibitem{Busing2024} BÜSING, C.; GERSING, T.; WREDE, S. Insights into the computational complexity of the single-source capacitated facility location problem with customer preferences. [s.l.] Optimization Online, dez. 2024. 
 
 \bibitem{Kang2023} KANG, C.-N. et al. A service facility location problem considering customer preference and facility capacity. Computers \& Industrial Engineering, v. 177, p. 109070, 2023.
 
@@ -211,7 +250,7 @@ The subsection titles must be in boldface, 12pt, flush left.
 
 \bibitem{ChurchReVelle2010} CHURCH, R.; REVELLE, C. Theoretical and Computational Links between the pMedian, Location Setcovering, and the Maximal Covering Location Problem. Geographical Analysis, v. 8, p. 406–415, 3 set. 2010. 
 
-\bibitem{PedrosoEtAl2012} PEDROSO, J. P. et al. Facility Location Problems — Mathematical Optimization: Solving Problems Using Gurobi and Python. Disponível em: <https://scipbook.readthedocs.io/en/latest/flp.html>.
+\bibitem{Pedroso2012} PEDROSO, J. P. et al. Facility Location Problems — Mathematical Optimization: Solving Problems Using Gurobi and Python. Disponível em: <https://scipbook.readthedocs.io/en/latest/flp.html>.
 
 \end{thebibliography}
 
