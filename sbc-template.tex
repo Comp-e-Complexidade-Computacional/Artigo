@@ -6,6 +6,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
 \usepackage[none]{hyphenat}
+\usepackage{amsmath}
+\usepackage{amssymb} 
 
 \makeatletter
 \patchcmd{\@startsection}
@@ -29,52 +31,153 @@ Murilo Mota, Rafael Gonçalves, Rene Marinho}
 \maketitle
      
 \begin{resumo}
-O presente trabalho visa apresentar um panorama das diferentes definições dos Problemas de Localização de Instalações (Facility Location Problems -- FLPs), por meio da construção de cenários ilustrativos que exemplificam suas distintas aplicações e contextos de manifestação. Ademais, busca-se destacar as metodologias desenvolvidas para tratar cada variante do problema, ressaltando como diferentes abordagens podem ser aplicadas conforme a natureza específica de cada cenário.
+Este estudo apresenta um panorama das diversas definições dos Problemas de Localização de Instalações (Facility Location Problems - FLPs), por meio de cenários ilustrativos que evidenciam suas distintas aplicações. Além disso, destaca-se as metodologias desenvolvidas para tratar cada variante do problema, ressaltando como diferentes abordagens podem ser empregadas conforme a natureza específica de cada contexto.
 \end{resumo}
 
 \section{Introdução}
 
-A busca por um posicionamento ideal de instalações é central para a provisão de serviços, sejam eles comerciais ou públicos, e para a integração regional por meio de infraestruturas físicas, como pontes, aeroportos e terminais rodoviários. No campo da Pesquisa Operacional, esse desafio é formulado como o Problema de Localização de Instalações (PLI), cujo objetivo é selecionar locais de instalação que maximizem o atendimento à demanda e a acessibilidade dos usuários. Essas decisões envolvem diferentes critérios, tais como maximizar a cobertura da demanda, minimizar os custos operacionais e assegurar um atendimento mínimo a determinados grupos de clientes (SOUSA FILHO, 2012; RUSHTON, 1979).
+O posicionamento ideal de instalações é crucial para a provisão eficiente de serviços, sejam eles de natureza comercial ou pública, assim como para a integração regional por meio de infraestruturas físicas, como pontes, aeroportos e terminais rodoviários. No âmbito da Pesquisa Operacional, esse desafio é tratado pelo Problema de Localização de Instalações (PLI), cujo objetivo é selecionar locais de instalação que maximizem o atendimento à demanda e a acessibilidade dos usuários. Tais decisões devem considerar critérios diversos, como a maximização da cobertura da demanda, a minimização dos custos operacionais e a garantia de níveis mínimos de atendimento para determinados grupos de clientes (Sousa Filho et al., 2012; Rushton, 1979).
 
-Várias formulações matemáticas têm sido propostas para tratar esses objetivos, destacando-se, entre elas, o Problema de Localização de Máxima Cobertura (PLMC) e o Problema das P-Medianas. Tais modelos dependem de fatores como a distribuição geográfica da população e os tempos de deslocamento para determinar soluções viáveis e eficientes. De fato, estudos recentes confirmam que esses critérios de localização buscam garantir a acessibilidade, ponderando simultaneamente a demanda por serviços e as distâncias de viagem (KUO e KUNG, 2025).
+Várias formulações matemáticas têm sido propostas para atender a esses objetivos, destacando-se, entre elas, o Problema de Localização de Máxima Cobertura (PLMC) e o Problema das P-Medianas. Esses modelos dependem de fatores como a distribuição geográfica da população e os tempos de deslocamento para determinar soluções viáveis e eficientes. De fato, estudos recentes apontam que esses critérios de localização buscam garantir a acessibilidade, ponderando simultaneamente a demanda por serviços e as distâncias de viagem (Kuo e Kung, 2025).
 
-Entre os cenários em que os PLI se manifestam, destaca-se a relação entre instalações e clientes. Nos casos em que a instalação a ser aberta é escolhida dentre um conjunto de locais potenciais e os clientes são alocados a essas instalações visando minimizar o custo de atendimento da demanda, tem-se a formulação conhecida como Problema de Localização de Instalações sem Limitação de Capacidade (Uncapacitated Facility Location Problem -- UFLP). Por outro lado, quando as demandas dos clientes devem ser atendidas exclusivamente por instalações com capacidade limitada, sem possibilidade de fracionar a demanda entre diferentes locais, o problema é classificado como Problema de Localização de Instalações Capacitado de Fonte Única (Single-Source Capacitated Facility Location Problem -- CFLP) (BÜSING et al., 2025).
+Entre os cenários de aplicação dos PLI, destaca-se a relação entre instalações e clientes. Quando a instalação a ser aberta é escolhida dentre um conjunto de locais potenciais e os clientes são alocados a essas instalações visando minimizar o custo total de atendimento à demanda, obtém-se a formulação conhecida como Problema de Localização de Instalações sem Limitação de Capacidade (Uncapacitated Facility Location Problem - UFLP). Por outro lado, quando as demandas dos clientes devem ser atendidas exclusivamente por instalações com capacidade limitada, sem possibilidade de fracionar a demanda entre diferentes locais, o problema é classificado como o Problema de Localização de Instalações Capacitado de Fonte Única (Single-Source Capacitated Facility Location Problem - CFLP).
 
-Tanto o UFLP quanto o CFLP baseiam-se em uma lógica de minimização de custos de transporte entre clientes e instalações, desconsiderando fatores subjetivos, como a preferência dos usuários por determinada instalação (o que pode influenciar sua propensão a utilizá-la). Nessas formulações, o problema assume caráter de NP-difícil, pois é necessário considerar diversas combinações de alocação de clientes a instalações (KANG et al., 2023).
+Tanto o UFLP quanto o CFLP baseiam-se na minimização dos custos de transporte entre clientes e instalações, desconsiderando fatores subjetivos, como a preferência dos usuários por determinada instalação (o que pode influenciar sua propensão a utilizá-la). Nesse contexto, esses problemas assumem caráter NP-difícil, uma vez que é necessário considerar numerosas combinações de alocação de clientes a instalações (Kang et al., 2023).
 
-Grande parte das formulações propostas adota cenários determinísticos, em que as variáveis de demanda e tempo são tratadas como valores fixos. Contudo, dada a natureza NP-difícil dos problemas de otimização, há limitações inerentes na busca por soluções ótimas. Mesmo os modelos clássicos, que fornecem descrições generalistas adequadas, apresentam restrições significativas em contextos com alta incerteza ou dinamicidade, que refletiriam melhor a realidade. Assim, a literatura dedica atenção à incorporação de incertezas e aspectos dinâmicos nos modelos de localização, por meio, por exemplo, de programação estocástica e análise de cenários (OWEN e DASKIN, 1998).
+Grande parte das formulações propostas adota cenários determinísticos, nos quais variáveis de demanda e tempo de viagem são tratadas como valores fixos. No entanto, dada a natureza NP-difícil desses problemas, surgem limitações inerentes na busca por soluções ótimas. Mesmo os modelos clássicos, que fornecem descrições generalistas adequadas, apresentam restrições significativas em contextos de alta incerteza ou dinamicidade, que poderiam refletir de forma mais realista a complexidade dos cenários reais. Incertezas e aspectos dinâmicos podem ser incorporados aos modelos de localização por meio de ferramentas como programação estocástica e análise de cenários (Owen e Daskin, 1998).
 
-Nas próximas seções, serão apresentadas considerações sobre a motivação e os objetivos deste trabalho. Em seguida, traçaremos um panorama dos principais estudos na área de localização de instalações, com ênfase nos trabalhos já citados (especialmente na metodologia de análise proposta por Rushton e na revisão de Owen e Daskin). Posteriormente, na seção de Metodologia, descreveremos como o tema foi abordado nos cenários analisados, e por fim serão apresentados os resultados obtidos.
+A seguir, são apresentadas considerações sobre a motivação e os objetivos deste trabalho. Em seguida, traçaremos um panorama dos principais estudos na área de localização de instalações, enfatizando os trabalhos mencionados (especialmente a metodologia de análise utilizada por Rushton e a revisão de Owen e Daskin). Posteriormente, na seção de Fundamentação Teórica, descreveremos as formulações adotadas para os problemas estudados, e, por fim, na seção de Metodologia, detalharemos os procedimentos adotados na análise dos cenários.
 
 \subsection{Importância do Tema}
 
-Apesar das limitações em simular todos os cenários possíveis em problemas de localização de instalações, existe um amplo conjunto de pesquisas nessa área, no qual diversas abordagens foram propostas para casos extremos. Isso possibilita utilizar o conhecimento atual do campo para realizar análises que vão desde a infraestrutura existente até predições de desempenho futuro em determinada localidade. Nesse contexto, aplicar metodologias de FLP, mesmo que de forma simplificada, pode ajudar a refletir criticamente sobre como o espaço geográfico tem sido utilizado ao longo do tempo e como poderá ser utilizado no futuro (RUSHTON, 1979).
+Apesar das limitações em simular todos os cenários possíveis nos problemas de localização de instalações, existe um conjunto extenso de pesquisas nessa área, no qual diversas abordagens foram propostas para casos extremos. Esse arcabouço de conhecimento possibilita realizar análises que vão desde o estudo da infraestrutura existente até a previsão de desempenho futuro em uma determinada localidade. Nesse contexto, a aplicação de metodologias de FLP, mesmo que de forma simplificada, contribui para uma reflexão crítica acerca de como o espaço geográfico tem sido utilizado ao longo do tempo e de como poderá ser utilizado no futuro (Rushton, 1979).
 
 \subsection{Objetivos}
 
-Este trabalho pretende realizar análises baseadas em metodologias de localização de instalações (FLP), adaptadas à realidade dos cenários sob estudo. Por meio dessas análises, busca-se evidenciar diferentes perspectivas ao confrontar cada cenário com as possibilidades que ele apresenta. Assim, adotamos um paradigma analítico restrito à realidade dos dados disponíveis, procurando extrair percepções a partir dos resultados obtidos.
+O objetivo deste trabalho é realizar análises fundamentadas em metodologias de localização de instalações (FLP), adaptadas à realidade dos cenários estudados. Por meio dessas análises, busca-se evidenciar diferentes perspectivas ao confrontar cada cenário com as possibilidades específicas que ele apresenta. Adota-se, assim, um paradigma analítico condizente com a realidade dos dados disponíveis, visando extrair percepções a partir dos resultados obtidos.
 
 \section{Trabalhos Relacionados}
 
-Segundo Owen e Daskin (1998), a teoria da localização de instalações iniciou-se em 1909 com Alfred Weber, que buscou posicionar um depósito de modo a minimizar a distância total aos clientes. Esses trabalhos iniciais foram essencialmente analíticos e restritos a formulações matemáticas e representações gráficas básicas, com aplicação prática muito limitada. Somente na década de 1960, com o advento da computação, pesquisadores puderam propor métodos mais aplicáveis a cenários reais de localização. Mesmo assim, as formulações clássicas mantiveram-se estáticas e determinísticas, assumindo parâmetros de demanda e tempos de deslocamento fixos, o que restringe sua flexibilidade diante de condições variáveis.
+Segundo Owen e Daskin (1998), a teoria da localização de instalações teve início em 1909 com o trabalho pioneiro de Alfred Weber, que buscava posicionar um depósito de modo a minimizar a distância total até os clientes. Rushton (1978) descreve esses primeiros esforços como essencialmente analíticos e restritos a formulações matemáticas básicas e representações gráficas rudimentares, com aplicação prática limitada. Somente na década de 1960, com o advento da computação, pesquisadores puderam propor métodos aplicáveis a cenários reais de localização. Mesmo assim, as formulações clássicas mantiveram-se estáticas e determinísticas, considerando parâmetros de demanda e tempos de deslocamento como dados fixos, o que restringe sua flexibilidade diante de condições variáveis.
 
-Estudos mais recentes têm buscado expandir essas abordagens tradicionais incorporando modularidade e dinamicidade. Alarcon-Gerbier e Buscher (2022) ressaltam que a capacidade modular (unidades de produção realocáveis ou expansíveis) e as instalações móveis vêm recebendo atenção crescente, com aplicações emergentes em diversos setores. De modo similar, Kang et al. (2023) propuseram um modelo de localização de serviços que leva em conta a preferência dos clientes pelas instalações, além de considerar explicitamente as capacidades das unidades, evidenciando a complexidade adicional introduzida por esse fator. Nesses modelos modernos, devem ser ponderados não apenas custos de transporte e cobertura de demanda, mas também escolhas comportamentais dos usuários, ampliando os requisitos de viabilidade do sistema. Nesse contexto, trabalhos recentes destacam a alta complexidade desses problemas, por exemplo, Büsing et al. (2024) mostram que determinar uma alocação viável no problema capacitado de fonte única com preferências (SSCFLP-CP) já é \textit{NP}-completo, ilustrando o caráter intratável da variante.
+Estudos mais recentes têm buscado expandir essas abordagens tradicionais, incorporando conceitos de modularidade e dinamicidade. Alarcon-Gerbier e Buscher (2022) ressaltam que a modularidade, viabilizada por meio de unidades de produção realocáveis ou expansíveis e instalações móveis, vem recebendo atenção crescente, com aplicações emergentes em diversos setores. De modo similar, Kang et al. (2023) propuseram um modelo de localização de serviços que considera as preferências dos clientes pelas instalações, além de levar em conta explicitamente as capacidades das unidades, evidenciando a complexidade adicional introduzida por esses fatores. Nesses modelos modernos, pesquisadores ponderam não apenas os custos de transporte e a cobertura da demanda, mas também escolhas comportamentais dos usuários, ampliando os requisitos de viabilidade do sistema.
 
-As proposições iniciais forneceram uma base conceitual sólida, mas eram restritas ao funcionamento ideal das instalações e a atendimentos simplificados. Com o avanço da área, passaram a ser considerados cenários mais complexos, como interrupções no sistema. Um exemplo notável é o estudo de Ramshani et al. (2019), que abordam um modelo de localização de dois níveis (\textit{Two-Level UFLP}) sob incertezas de disrupção. Os autores desenvolvem formulações matemáticas e heurísticas (por exemplo, busca tabu) para lidar com paradas de funcionamento em pontos da rede, mostrando como essas descontinuações afetam a seleção de locais e alocações. Esses avanços ilustram a tendência atual de modelar problemas de localização de forma mais realista, incorporando aspectos de resiliência operacional e logística associada às instalações.
+Nesse contexto, trabalhos recentes ressaltam a elevada complexidade desses problemas. Por exemplo, Büsing et al. (2024) demonstram que determinar uma alocação viável no problema capacitado de fonte única com preferências (CFLP-CP) já é NP-completo, ilustrando o caráter intratável dessa variante.
 
-\section{Método Explicado}
+As primeiras proposições forneceram uma base conceitual sólida, porém restrita a cenários ideais de operação e atendimentos simplificados. Com o avanço da área, passaram a ser considerados contextos mais complexos, como interrupções no sistema. Um exemplo notável é o estudo de Ramshani et al. (2019), que aborda um modelo de localização de dois níveis (Two-Level UFLP) sob incertezas de disrupção. Os autores desenvolvem formulações matemáticas e heurísticas para lidar com paralisações em pontos da rede, demonstrando como essas descontinuidades afetam a seleção de locais e as alocações. Esses avanços ilustram a tendência atual de modelagem mais realista dos problemas de localização, incorporando aspectos de resiliência operacional e logística associada às instalações.
 
-Nos primeiros trabalhos acerca do problema de localizações, desenvolvidos por Alfred Weber, foi proposto o primeiro modelo das atuais definições de P-Mediano, P-Minimax e P-
+\section{Fundamentação Teórica}
 
-\subsection{Posicionamento de Farmácias}
+Os problemas de localização de instalações envolvem a decisão de designar uma ou mais unidades para atender a um determinado contexto. Como a formulação matemática não admite soluções fracionárias, por exemplo, “meia instalação”, tais problemas são tradicionalmente modelados por meio da Programação Inteira, em que as variáveis assumem valores inteiros e representam decisões binárias de abertura ou não de uma instalação.
 
-No seguinte cenário analisamos a aplicabilidade de um modelo de OFLP para identificar as disposições mais adequadas ao posicionamento de farmácias, com foco no bairro Centro, em Aracaju, considerando aspectos geográficos, fluxo de pessoas e possibilidade de estabelecimento. Entre os fatores analisados a proximidade de áreas comerciais e distribuidoras de medicamentos, bem como o acesso à infraestrutura necessária para a operação do estabelecimento.
+Segundo Owen e Daskin (1998), embora a Programação Inteira seja a base predominante das formulações clássicas, essas abordagens costumam ser estáticas e determinísticas, pois não consideram explicitamente as incertezas do ambiente real, o que limita sua aplicabilidade em contextos dinâmicos ou sujeitos a variações imprevistas. Nessas circunstâncias, embora matematicamente consistentes, as soluções obtidas podem não refletir integralmente a complexidade prática do problema.
 
-Com o intuito de avaliar a versatilidade do modelo, trabalhamos em cima de um primeiro cenário no qual supomos o estabelecimento de uma farmácia sem bandeira, 
+Como alternativas, Owen e Daskin (1998) sugerem métodos dinâmicos e estocásticos. Os métodos dinâmicos são indicados quando o cenário presente é conhecido, mas há interesse em projetar soluções para períodos futuros, considerando possíveis alterações no sistema. Já os métodos estocásticos permitem modelar explicitamente a incerteza, ao incorporar variáveis aleatórias relacionadas a fatores como demanda, custos e tempos de viagem. Nesse caso, a solução do problema busca identificar a localização ótima das instalações por meio de avaliações probabilísticas das variáveis ou da análise de cenários alternativos, caracterizando um modelo de planejamento baseado em cenários.
 
-Com o intuito de avaliar a versatilidade do modelo, são construídos diferentes cenários que refletem a realidade da região selecionada, permitindo também inferir sobre sua aplicabilidade em outras localidades. Em alguns cenários, desconsideram-se as farmácias já existentes, de modo a identificar potenciais novas geolocalizações estratégicas, independentemente da concorrência.
+Neste trabalho, serão desenvolvidas análises fundamentadas em duas formulações clássicas da literatura: o Problema das P-Medianas, formulado por Hakimi (1964), e o Problema de Localização de Máxima Cobertura (PLMC), descrito por Church e ReVelle (1976). O Problema das P-Medianas consiste em alocar instalações de modo a minimizar o tempo médio de deslocamento entre cada cliente e a instalação que o atende. Nesse contexto, a formulação busca identificar posições ideais de instalações de forma que a acessibilidade seja maximizada e os custos de deslocamento sejam reduzidos ao mínimo possível. A formulação matemática do problema das P-Medianas pode ser expressa como um modelo de Programação Inteira da seguinte forma:
 
-Para aumentar a precisão dos resultados, a análise é restrita às áreas com maior intensidade de atividade comercial, uma vez que estas oferecem condições mais adequadas para a coleta de dados. A abordagem combina critérios de acessibilidade, visibilidade e conveniência para os clientes, com o objetivo de maximizar a eficiência operacional e a cobertura de mercado. Os resultados obtidos fornecem subsídios práticos tanto para o planejamento urbano quanto para estratégias de expansão do setor farmacêutico no bairro.
+\[
+\begin{aligned}
+i \in I\ (I=\{1,\ldots,n\}) &\quad \text{índice/conjunto de clientes},\\
+j \in J\ (J=\{1,\ldots,m\}) &\quad \text{índice/conjunto de instalações potenciais},\\
+c_{ij} \ge 0 &\quad \text{custo/distância entre o cliente $i$ e a instalação $j$},\\
+P \in \mathbb{Z}_{+} &\quad \text{número de instalações a serem abertas}.
+\end{aligned}
+\]
+\[
+x_{ij} =
+\begin{cases}
+1, & \text{se o cliente $i$ é atendido pela instalação $j$},\\
+0, & \text{caso contrário},
+\end{cases}
+\quad
+y_{j} =
+\begin{cases}
+1, & \text{se a instalação $j$ é aberta},\\
+0, & \text{caso contrário}.
+\end{cases}
+\]
+\begin{alignat*}{2}
+\text{Minimizar}\quad 
+& \sum_{i \in I}\sum_{j \in J} c_{ij}\,x_{ij} \\
+\text{sujeito a}\quad
+& \sum_{j \in J} x_{ij} = 1,                 && \quad \forall i \in I, \\
+& \sum_{j \in J} y_{j} = P,                  && \\
+& x_{ij} \le y_{j},                          && \quad \forall i \in I,\ \forall j \in J, \\
+& x_{ij} \in \{0,1\},                        && \quad \forall i \in I,\ \forall j \in J, \\
+& y_{j} \in \{0,1\},                         && \quad \forall j \in J.
+\end{alignat*}
+
+O PLMC, por sua vez, busca localizar um número limitado de instalações para maximizar a cobertura da demanda em uma distância máxima \(d\). Diferentemente do problema das P-Medianas, que objetiva minimizar as distâncias médias de deslocamento, o PLMC considera que um cliente está coberto se estiver a uma distância aceitável \(d\) de pelo menos uma instalação. Assim, a formulação prioriza atender o maior número possível de clientes (ou demanda) dentro de um raio \(d\), dado um número \(P\) de instalações a serem abertas.
+
+\[
+\begin{aligned}
+w_i \ge 0 &\quad \text{demanda do cliente } i,\\
+d_{ij} \ge 0 &\quad \text{distância entre o cliente $i$ e a instalação $j$},\\
+P \in \mathbb{Z}_{+} &\quad \text{número de instalações a serem abertas},\\
+d \ge 0 &\quad \text{distância máxima de cobertura}.
+\end{aligned}
+\]
+Definem-se as variáveis:
+\[
+z_i = 
+\begin{cases}
+1, & \text{se o cliente $i$ está coberto por alguma instalação}, \\
+0, & \text{caso contrário},
+\end{cases}
+\quad
+x_j =
+\begin{cases}
+1, & \text{se a instalação $j$ é aberta}, \\
+0, & \text{caso contrário}.
+\end{cases}
+\]
+O modelo de Programação Inteira do PLMC pode ser formulado como:
+\begin{alignat*}{2}
+\text{Maximizar}\quad
+& \sum_{i \in I} w_i\,z_i \\
+\text{sujeito a}\quad
+& \sum_{j \in J} x_j = P, \\
+& z_i \le \sum_{j : d_{ij} \le d} x_j, && \quad \forall i \in I, \\
+& x_j \in \{0,1\}, && \quad \forall j \in J, \\
+& z_i \in \{0,1\}, && \quad \forall i \in I.
+\end{alignat*}
+
+Nos cenários descritos a seguir, esses dois métodos foram utilizados para analisar a disposição de serviços e infraestruturas no bairro Centro de Aracaju, com base em dados obtidos pelo OpenStreetMap. Nos cenários, o bairro foi representado por uma malha regular e as instalações do serviço analisado foram identificadas a partir dos dados do OpenStreetMap. Em seguida, avaliou-se o posicionamento dessas instalações segundo o problema das P-Medianas e o PLMC, conforme detalhado a seguir.
+
+\section{Procedimentos Metodológicos}
+
+Esta pesquisa adota uma abordagem exploratória, fundamentada em modelos clássicos de localização de instalações, visando analisar a distribuição espacial de serviços no bairro Centro de Aracaju. Optou-se por uma proposta metodológica simples, destinada apenas a ilustrar como conceitos consolidados na literatura podem ser aplicados a um recorte territorial específico, sem pretensão de exaustividade ou sofisticação técnica. O procedimento metodológico foi estruturado em quatro etapas principais:
+
+\subsection{Coleta e preparação dos dados}
+
+Inicialmente, foram obtidos dados espaciais abertos por meio da plataforma \textit{OpenStreetMap} (OSM), incluindo informações sobre vias, pontos de interesse e infraestrutura existente no bairro Centro. Para fins analíticos, o espaço geográfico foi discretizado em uma malha de células regulares (grid), permitindo uma representação simplificada tanto da demanda quanto das possíveis localizações de serviços.
+
+Ademais, o tratamento necessário para a implementação dos métodos foi realizada utilizando um \textit{notebook} da plataforma \textit{Google Colab}, todos os códigos foram escritos em Python, utilizando as seguintes bibliotecas:
+
+\begin{itemize}
+    \item osmx: Acesso a base de dados do OSM;
+    \item folium: Criação da representação em mapa;
+    \item shapely: Divisão do mapa em células;
+    \item geopandas: Tratamento necessário para determinar presença de um elemento do OSM em uma célula do grid;
+\end{itemize}
+
+\subsection{Modelagem conceitual dos problemas}
+
+Na etapa seguinte, selecionaram-se dois modelos de referência da literatura: o Problema das P-Medianas e o Problema de Localização de Máxima Cobertura (PLMC). O primeiro busca identificar locais de instalação que minimizem a distância média de deslocamento entre usuários e serviços. O segundo procura maximizar a proporção da demanda atendida dentro de um raio de cobertura pré-definido. A aplicação conceitual desses modelos permite confrontar duas perspectivas de análise distintas: uma orientada pela eficiência de deslocamentos e outra voltada para a abrangência do atendimento.
+
+\subsection{Definição dos critérios de avaliação}
+
+Os cenários analisados serão avaliados a partir de critérios simples, tais como: 
+\begin{itemize} 
+\item (i) \textbf{acessibilidade}, medida pela proximidade entre pontos de demanda e instalações;
+\item (ii) \textbf{cobertura}, definida como a quantidade de usuários atendidos em uma distância máxima aceitável;
+\end{itemize}
+Esses critérios visam oferecer uma interpretação qualitativa dos resultados, evitando o uso de métricas complexas ou análises probabilísticas.
+
+\subsection{Análise e interpretação dos cenários}
+
+Por fim, os cenários resultantes da aplicação conceitual dos modelos servirão de base para discussão. Pretende-se evidenciar como diferentes formulações de problemas de localização podem conduzir a interpretações distintas sobre a disposição espacial de serviços no bairro estudado. Ressalta-se que a natureza exploratória da metodologia adotada implica limitações quanto à generalização dos resultados, os quais devem ser interpretados como ilustrações preliminares do potencial de aplicação dos modelos de localização em contextos urbanos.
 
 \section{Resultados}
 
@@ -105,6 +208,10 @@ The subsection titles must be in boldface, 12pt, flush left.
 \bibitem{OwenDaskin1998} OWEN, S. H.; DASKIN, M. S. Strategic facility location: A review. European Journal of Operational Research, v. 111, p. 423–447, 1998. 
 
 \bibitem{Alarcon-GerbierBuscher2022} ALARCONGERBIER, E.; BUSCHER, U. Modular and mobile facility location problems: A systematic review. Computers \& Industrial Engineering, v. 173, p. 108734, 2022. 
+
+\bibitem{ChurchReVelle2010} CHURCH, R.; REVELLE, C. Theoretical and Computational Links between the pMedian, Location Setcovering, and the Maximal Covering Location Problem. Geographical Analysis, v. 8, p. 406–415, 3 set. 2010. 
+
+\bibitem{PedrosoEtAl2012} PEDROSO, J. P. et al. Facility Location Problems — Mathematical Optimization: Solving Problems Using Gurobi and Python. Disponível em: <https://scipbook.readthedocs.io/en/latest/flp.html>.
 
 \end{thebibliography}
 
